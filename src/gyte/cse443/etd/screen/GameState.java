@@ -21,6 +21,9 @@ public class GameState extends FlxState {
     public GameState(MapManager man) {
     }
 
+    public GameState() {
+    }
+
     @Override
     public void create() {
         mapMan = new MapManager();

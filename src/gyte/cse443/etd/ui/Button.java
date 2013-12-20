@@ -7,6 +7,7 @@ package gyte.cse443.etd.ui;
 
 import gyte.cse443.etd.Resources;
 import org.flixel.FlxButton;
+import org.flixel.FlxG;
 import org.flixel.event.IFlxButton;
 
 /**
@@ -21,6 +22,7 @@ public class Button extends FlxButton {
             loadGraphic(img);
             antialiasing = true;
         }
-        setSounds(Resources.buttonClick);
+        soundDown = FlxG.loadSound(Resources.buttonClick);
+        soundDown.survive = true;
     }
 }

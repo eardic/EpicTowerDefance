@@ -21,9 +21,9 @@ public class TextField extends FlxInputText {
         super(X, Y, null, Label, Width, Height);
         label.setColor(Color.WHITE);
         label.setSize(20);
-        label.setFont(Resources.robotoFont);
+        label.setFont(Resources.vinerHandFont);
         setEnable(false);
-        textfield.setFormat(Resources.robotoFont, 20, Color.WHITE);
+        textfield.setFormat(Resources.vinerHandFont, 20, Color.WHITE);
         antialiasing = true;        
     }
 
