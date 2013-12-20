@@ -2,6 +2,7 @@ package gyte.cse443.etd.screen;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.flixel.FlxState;
 
 /**
  * @author Emre
@@ -10,50 +11,47 @@ import java.util.Map;
  */
 public class ScreenManager {
 
-	private Map<ScreenType, Screen> screens;
-	private Screen currentScreen;
+    private Map<ScreenType, FlxState> screens;
+    private FlxState currentScreen;
 
-	public ScreenManager() {
-		screens = new HashMap<ScreenType, Screen>();
-		setCurrentScreen(null);
-	}
+    public ScreenManager() {
+        screens = new HashMap<ScreenType, FlxState>();
+        setCurrentScreen(null);
+    }
 
-	public void finalize() throws Throwable {
-		screens.clear();
-		super.finalize();
-	}
+    public void finalize() throws Throwable {
+        screens.clear();
+        super.finalize();
+    }
 
-	public void changeScreen(ScreenType newScr) {
-		setCurrentScreen(screens.get(newScr));
-	}
+    public void changeScreen(ScreenType newScr) {
+        setCurrentScreen(screens.get(newScr));
+    }
 
-	public void draw() {
+    public void draw() {
 
-	}
-	
-	public void addScreen(Screen scr, ScreenType type)
-	{
-		screens.put(type, scr);
-	}
-	
-	public void removeScreen(ScreenType type)
-	{
-		screens.remove(type);
-	}
+    }
 
-	/**
-	 * @return the currentScreen
-	 */
-	public Screen getCurrentScreen() {
-		return currentScreen;
-	}
+    public void addScreen(FlxState scr, ScreenType type) {
+        screens.put(type, scr);
+    }
 
-	/**
-	 * @param currentScreen
-	 *            the currentScreen to set
-	 */
-	private void setCurrentScreen(Screen currentScreen) {
-		this.currentScreen = currentScreen;
-	}
+    public void removeScreen(ScreenType type) {
+        screens.remove(type);
+    }
+
+    /**
+     * @return the currentScreen
+     */
+    public FlxState getCurrentScreen() {
+        return currentScreen;
+    }
+
+    /**
+     * @param currentScreen the currentScreen to set
+     */
+    private void setCurrentScreen(FlxState currentScreen) {
+        this.currentScreen = currentScreen;
+    }
 
 }// end ScreenManager

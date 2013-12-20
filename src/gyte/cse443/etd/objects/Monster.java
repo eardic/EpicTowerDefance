@@ -1,5 +1,5 @@
 package gyte.cse443.etd.objects;
-import org.flixel.FlxObject;
+
 import org.flixel.FlxSprite;
 
 /**
@@ -7,67 +7,21 @@ import org.flixel.FlxSprite;
  * @version 1.0
  * @created 03-Dec-2013 12:43:10
  */
-public class Monster extends FlxObject {
+public class Monster extends FlxSprite {
 
-	private FlxSprite image;
-	private int type;
+    private MonsterType type;
 
-	public Monster(){
+    public Monster(MonsterType type, String image) {
+        super(0, 0, image);
+        this.type = type;
+    }
 
-	}
+    public MonsterType getType() {
+        return type;
+    }
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
-	public void attack(){
+    public void setType(MonsterType type) {
+        this.type = type;
+    }
 
-	}
-
-	public void destroy(){
-
-	}
-
-	public void draw(){
-
-	}
-
-	/**
-	 * 
-	 * @param f0
-	 */
-	public void hurt(float f0){
-
-	}
-
-	public void update(){
-
-	}
-
-	/**
-	 * @return the image
-	 */
-	public FlxSprite getImage() {
-		return image;
-	}
-
-	/**
-	 * @param image the image to set
-	 */
-	public void setImage(FlxSprite image) {
-		this.image = image;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public int getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(int type) {
-		this.type = type;
-	}
 }//end Monster

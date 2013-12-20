@@ -1,116 +1,90 @@
 package gyte.cse443.etd.screen;
 
+import android.graphics.Color;
 import gyte.cse443.etd.Resources;
 import gyte.cse443.etd.map.MapManager;
-
+import gyte.cse443.etd.ui.Button;
+import gyte.cse443.etd.ui.TextField;
 import org.flixel.FlxButton;
 import org.flixel.FlxG;
+import org.flixel.FlxSprite;
 import org.flixel.FlxState;
+import org.flixel.event.IFlxButton;
 import org.flixel.ui.FlxInputText;
-import org.flixel.ui.FlxLabel;
-import org.flixel.ui.FlxNinePatchButton;
-import org.flixel.ui.event.IFlxUIListener;
 
-import android.graphics.Color;
+public class GameState extends FlxState {
 
-public class GameState extends Screen {
+    private FlxButton startStopButton, menuButton, speedButton;
+    private FlxInputText money, lives, score;
+    private MapManager mapMan;
 
-	private FlxNinePatchButton startStopButton, menuButto, speedButton;
-	private FlxInputText money, lives, score;
-	private MapManager mapMan;
+    public GameState(MapManager man) {
+    }
 
-	public GameState() {
-		// TODO Auto-generated constructor stub
-		mapMan = new MapManager();
+    @Override
+    public void create() {
+        mapMan = new MapManager();
 
-		speedButton = new FlxNinePatchButton(100, 15, buttonSkin, "", 0, 0,
-				new SpeedEvent());
-		speedButton.loadGraphic(Resources.x1Button);
+        startStopButton = new Button(20, 7, Resources.startButton, new StartPauseEvent());
+        speedButton = new Button(100, 7, Resources.x1Button, new SpeedEvent());
+        money = new TextField(180, 26, 100, 30, "Resources", "0");
+        lives = new TextField(310, 26, 100, 30, "Lives", "5");
+        score = new TextField(440, 26, 100, 30, "Score", "0");
+        menuButton = new Button(570, 7, Resources.menuButton, new MenuEvent());
 
-		startStopButton = new FlxNinePatchButton(20, 15, buttonSkin, "", 0, 0,
-				new StartPauseEvent());
-		startStopButton.loadGraphic(Resources.startButton);
+        add(mapMan.getCurrentMap());
+        add(new FlxSprite().makeGraphic(FlxG.width, 64, Color.argb(255, 0, 0, 0)));
+        add(startStopButton);
+        add(speedButton);
+        add(money);
+        add(lives);
+        add(score);
+        add(menuButton);
+    }
 
-		money = new FlxInputText(200, 30, null, "Resources", 100, 30);
-		money.label.setColor(Color.BLACK);
-		money.label.setSize(20);
-		money.label.setFont(Resources.robotoFont);
-		money.textfield.setColor(Color.BLACK);
-		money.setEnable(false);
-		money.textfield.setFormat(Resources.robotoFont, 20);
-		money.setText("0");
-		
-		lives = new FlxInputText(330, 30, null, "Lives", 100, 30);
-		lives.label.setColor(Color.BLACK);
-		lives.label.setSize(20);
-		lives.label.setFont(Resources.robotoFont);
-		lives.textfield.setColor(Color.BLACK);
-		lives.setEnable(false);
-		lives.textfield.setFormat(Resources.robotoFont, 20);
-		lives.setText("5");
-		
-		score = new FlxInputText(460, 30, null, "Score", 100, 30);
-		score.label.setColor(Color.BLACK);
-		score.label.setSize(20);
-		score.label.setFont(Resources.robotoFont);
-		score.textfield.setColor(Color.BLACK);
-		score.setEnable(false);
-		score.textfield.setFormat(Resources.robotoFont, 20);
-		score.setText("0");
-		
-	}
+    private class StartPauseEvent implements IFlxButton {
 
-	@Override
-	public void create() {
-		add(mapMan.getCurrentMap());
-		add(money);
-		add(lives);
-		add(score);
-		add(startStopButton);
-		add(speedButton);
-	}
+        private boolean paused = false;
 
-	private class StartPauseEvent implements IFlxUIListener {
-		private boolean paused = false;
+        public void callback() {
+            // TODO Auto-generated method stub
+            System.out.println("Started/Paused");
+            if (!paused) {
+                paused = true;
+                startStopButton.loadGraphic(Resources.pauseButton);
+            } else {
+                paused = false;
+                startStopButton.loadGraphic(Resources.startButton);
+            }
+        }
 
-		public void callback() {
-			// TODO Auto-generated method stub
-			System.err.println("Started/Paused");
-			if (!paused) {
-				paused = true;
-				startStopButton.loadGraphic(Resources.pauseButton);
-			} else {
-				paused = false;
-				startStopButton.loadGraphic(Resources.startButton);
-			}
-		}
+    }
 
-	}
+    private class MenuEvent implements IFlxButton {
 
-	private class MenuEvent implements IFlxUIListener {
+        public void callback() {
+            // TODO Auto-generated method stub
+            System.out.println("Menu");
+        }
 
-		public void callback() {
-			// TODO Auto-generated method stub
-			System.err.println("Menu");
-		}
+    }
 
-	}
+    private class SpeedEvent implements IFlxButton {
 
-	private class SpeedEvent implements IFlxUIListener {
-		private boolean slow = true;
+        private boolean slow = true;
 
-		public void callback() {
-			// TODO Auto-generated method stub
-			System.err.println("Speed");
-			if (!slow) {
-				speedButton.loadGraphic(Resources.x1Button);
-				slow = true;
-			} else {
-				speedButton.loadGraphic(Resources.x2Button);
-				slow = false;
-			}
-		}
+        public void callback() {
+            // TODO Auto-generated method stub
+            System.out.println("Speed");
+            if (!slow) {
+                speedButton.loadGraphic(Resources.x1Button);
+                slow = true;
+            } else {
+                speedButton.loadGraphic(Resources.x2Button);
+                slow = false;
+            }
+        }
 
-	}
+    }
 
 }

@@ -6,19 +6,8 @@ import gyte.cse443.etd.Factory;
 
 public class MapFactory implements Factory {
 
-	private FlxSprite loadedMap;
-
-	/**
-	 * Gets map path
-	 * 
-	 * @param image
-	 */
-	public MapFactory(String file) {
-		loadedMap = new FlxSprite().loadGraphic(file);
-	}	
-
-	public FlxSprite create() {
-		return loadedMap;
-	}
+    public FlxSprite create(String file) {
+        return new FlxSprite().loadGraphic(file);
+    }
 
 }

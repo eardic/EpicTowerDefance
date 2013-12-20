@@ -14,30 +14,30 @@ import org.flixel.FlxSprite;
  */
 public class MapManager {
 
-	public static int TILE_SIZE = 32, TILE_X = 20, TILE_Y = 15;
-	private int currentMapIndex = 0;
-	private List<FlxSprite> maps;
+    public static int TILE_SIZE = 32, TILE_X = 20, TILE_Y = 15;
+    private int currentMapIndex = 0;
+    private List<FlxSprite> maps;
 
-	public MapManager() {
-		maps = new ArrayList<FlxSprite>();
-		// Load maps
-		maps.add(new MapFactory(Resources.map1).create());
-	}
+    public MapManager() {
+        maps = new ArrayList<FlxSprite>();
+        // Load maps
+        maps.add(new MapFactory().create(Resources.map1));
+    }
 
-	public void addMap(FlxSprite m) {
-		maps.add(m);
-	}
+    public void addMap(FlxSprite m) {
+        maps.add(m);
+    }
 
-	public FlxSprite getCurrentMap() {
-		return maps.get(currentMapIndex);
-	}
+    public FlxSprite getCurrentMap() {
+        return maps.get(currentMapIndex);
+    }
 
-	public void removeMap(FlxSprite m) {
-		maps.remove(m);
-	}
+    public void removeMap(FlxSprite m) {
+        maps.remove(m);
+    }
 
-	public void finalize() throws Throwable {
-		maps.clear();
-	}
+    public void finalize() throws Throwable {
+        maps.clear();
+    }
 
 }// end MapManager

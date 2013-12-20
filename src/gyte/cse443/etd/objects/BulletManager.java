@@ -10,29 +10,25 @@ import java.util.List;
  */
 public class BulletManager {
 
-	private List<Bullet> bullets;
+    private List<Bullet> bullets;
 
-	public BulletManager() {
-		bullets = new ArrayList<Bullet>();
-	}
+    public BulletManager() {
+        bullets = new ArrayList<Bullet>();
+    }
 
-	public void finalize() throws Throwable {
+    /**
+     *
+     * @param b
+     */
+    public void addBullet(Bullet b) {
+        bullets.add(b);
+    }
 
-	}
-
-	/**
-	 * 
-	 * @param b
-	 */
-	public void addBullet(Bullet b) {
-		bullets.add(b);
-	}
-
-	/**
-	 * 
-	 * @param b
-	 */
-	public void removeBullet(Bullet b) {
-		bullets.remove(b);
-	}
+    /**
+     *
+     * @param b
+     */
+    public void removeBullet(Bullet b) {
+        bullets.remove(b);
+    }
 }// end BulletManager

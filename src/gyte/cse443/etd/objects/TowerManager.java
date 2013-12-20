@@ -10,28 +10,21 @@ import java.util.List;
  */
 public class TowerManager {
 
-	private List<Tower> towers;
+    private List<Tower> towers;
 
-	public TowerManager(){
-		towers = new ArrayList<Tower>();
-	} 
+    public TowerManager() {
+        towers = new ArrayList<Tower>();
+    }
 
-	public void finalize() throws Throwable {
+    public void addTower(Tower tower) {
+        towers.add(tower);
+    }
 
-	}
-	/**
-	 * 
-	 * @param tower
-	 */
-	public void addTower(Tower tower){
-		towers.add(tower);
-	}
-
-	/**
-	 * 
-	 * @param tower
-	 */
-	public void removeTower(Tower tower){
-		towers.remove(tower);
-	}
+    /**
+     *
+     * @param tower
+     */
+    public void removeTower(Tower tower) {
+        towers.remove(tower);
+    }
 }//end TowerManager
