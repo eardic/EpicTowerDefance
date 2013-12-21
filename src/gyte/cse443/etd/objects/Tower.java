@@ -9,7 +9,7 @@ import org.flixel.FlxSprite;
  * @created 03-Dec-2013 12:43:11
  */
 public class Tower extends FlxObject {
-    
+
     private int cost;
     private int attackRange;
     private int attackSpeed;

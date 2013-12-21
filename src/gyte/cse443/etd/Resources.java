@@ -22,6 +22,11 @@ public class Resources {
 
     // Maps
     public static final String map1 = "maps/map1.png";
+    
+    public static final String map2 = "maps/map2.tmx",
+            map2Tiles = "maps/map2Tiles.png";
+    public static final int map2PathTile = 40;
+
     // Fonsts
     public static final String robotoFont = "fonts/Roboto-Regular.ttf";
     public static final String vinerHandFont = "fonts/vinerHand.ttf";

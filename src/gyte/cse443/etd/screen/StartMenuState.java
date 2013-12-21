@@ -29,10 +29,10 @@ public class StartMenuState extends FlxState {
         name.setFormat(Resources.vinerHandFont, 50, Color.WHITE);
         name.antialiasing = true;
 
-        startGame = new Button(FlxG.width / 2 - 158, 110, Resources.startGame, new StartGame());
-        options = new Button(FlxG.width / 2 - 158, 200, Resources.options, new Options());
-        about = new Button(FlxG.width / 2 - 158, 290, Resources.about, new About());
-        exit = new Button(FlxG.width / 2 - 158, 380, Resources.exitGame, new Exit());
+        startGame = new Button(FlxG.width / 2 - 158, 110, Resources.startGame, 316, 91, new StartGame());
+        options = new Button(FlxG.width / 2 - 158, 200, Resources.options, 316, 91, new Options());
+        about = new Button(FlxG.width / 2 - 158, 290, Resources.about, 316, 91, new About());
+        exit = new Button(FlxG.width / 2 - 158, 380, Resources.exitGame, 316, 91, new Exit());
 
         add(new FlxSprite(0, 0, Resources.menuBg));
         add(name);
@@ -40,12 +40,6 @@ public class StartMenuState extends FlxState {
         add(options);
         add(about);
         add(exit);
-    }
-
-    @Override
-    public void update() {
-        super.update(); //To change body of generated methods, choose Tools | Templates.
-
     }
 
     // LISTENER CLASSES FOR BUTTONS

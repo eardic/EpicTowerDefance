@@ -1,5 +1,6 @@
 package gyte.cse443.etd.objects;
 
+import org.flixel.FlxG;
 import org.flixel.FlxSprite;
 
 /**

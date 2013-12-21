@@ -15,7 +15,7 @@ import org.flixel.FlxObject;
  */
 public class MonsterFactory implements Factory {
 
-    public FlxObject create(String type) {
+    public Monster create(String type) {
         if (MonsterType.KNIGHT.name().equalsIgnoreCase(type)) {
             return new Monster(MonsterType.KNIGHT, Resources.knight);
         }
