@@ -5,7 +5,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader.Parameters;
 import gyte.cse443.etd.Factory;
 import gyte.cse443.etd.Resources;
-import org.flixel.FlxObject;
 
 public class MapFactory implements Factory {
 
@@ -21,8 +20,28 @@ public class MapFactory implements Factory {
     }
 
     public Map create(String level) {
+        String tmx = Resources.mapTmx.replaceAll("#", level);
+        String tile = Resources.mapTiles.replaceAll("#", level);
+        if ("1".equals(level)) {
+            return loadMap(tmx, tile, Resources.map1PathTile);
+        }
         if ("2".equals(level)) {
-            return loadMap(Resources.map2, Resources.map2Tiles, Resources.map2PathTile);
+            return loadMap(tmx, tile, Resources.map2PathTile);
+        }
+        if ("3".equals(level)) {
+            return loadMap(tmx, tile, Resources.map3PathTile);
+        }
+        if ("4".equals(level)) {
+            return loadMap(tmx, tile, Resources.map4PathTile);
+        }
+        if ("5".equals(level)) {
+            return loadMap(tmx, tile, Resources.map5PathTile);
+        }
+        if ("6".equals(level)) {
+            return loadMap(tmx, tile, Resources.map6PathTile);
+        }
+        if ("7".equals(level)) {
+            return loadMap(tmx, tile, Resources.map7PathTile);
         }
         return null;
     }

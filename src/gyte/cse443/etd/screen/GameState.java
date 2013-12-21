@@ -45,7 +45,7 @@ public class GameState extends FlxState {
     }
 
     public GameState() {
-        this(2);
+        this(4);
     }
 
     @Override

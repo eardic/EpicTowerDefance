@@ -21,11 +21,15 @@ public class Resources {
     public static final String about = "menus/about.png";
 
     // Maps
-    public static final String map1 = "maps/map1.png";
-    
-    public static final String map2 = "maps/map2.tmx",
-            map2Tiles = "maps/map2Tiles.png";
-    public static final int map2PathTile = 40;
+    public static final String mapTmx = "maps/map#/map#.tmx",
+            mapTiles = "maps/map#/map#Tiles.png";
+    public static final int map1PathTile = 15;    
+    public static final int map2PathTile = 20;
+    public static final int map3PathTile = 5;
+    public static final int map4PathTile = 34;
+    public static final int map5PathTile = 1;
+    public static final int map6PathTile = 9;
+    public static final int map7PathTile = 40;
 
     // Fonsts
     public static final String robotoFont = "fonts/Roboto-Regular.ttf";
