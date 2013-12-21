@@ -43,12 +43,13 @@ public class MonsterManager extends FlxGroup {
 
     private void createMonstersByLevel() {
         monsterGroup = new Stack<Stack<Monster>>();
-        if (level <= 1) {
+        createGroup(GROUP_SIZE, MonsterType.KNIGHT);
+        /*if (level <= 1) {
             createGroup(GROUP_SIZE, MonsterType.KNIGHT);
         }
         if (level <= 2) {
             createGroup(GROUP_SIZE, MonsterType.KNIGHT);
-        }
+        }*/
     }
 
     private void createGroup(int size, MonsterType type) {
