@@ -53,26 +53,25 @@ public class StartMenuState extends FlxState {
 
     private class Options implements IFlxButton {
 
-        public void callback() {
-
+        public void callback() {        	
+        	FlxG.switchState(new GameSettingsState());
         }
 
     }
 
     private class About implements IFlxButton {
-
-        public void callback() {
-
+    	
+        public void callback() {        	
+        	FlxG.switchState(new AboutState());
         }
 
     }
 
     private class Exit implements IFlxButton {
 
-        public void callback() {
-
+        public void callback() {        	
+        	System.exit(1);  
         }
-
     }
 
 }

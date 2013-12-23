@@ -16,37 +16,37 @@ public class TowerFactory implements Factory {
 
     public Tower create(String type) {
         if (TowerType.CRYSTAL_TOWER.name().equals(type)) {
-            Tower t = new Tower(90, 300, 1000);
+            Tower t = new Tower(TowerType.CRYSTAL_TOWER,BulletType.RED,90, 300, 1000);
             t.loadGraphic(Resources.towerImg.replaceAll("#", "3"),false,false,32,64);
             return t;
         }
         if (TowerType.BLOOD_MAGIC.name().equals(type)) {
-            Tower t = new Tower(80, 500, 600);
+            Tower t = new Tower(TowerType.BLOOD_MAGIC,BulletType.RED,80, 500, 600);
             t.loadGraphic(Resources.towerImg.replaceAll("#", "5"),false,false,32,64);
             return t;
         }
         if (TowerType.CHINESE_TOWER.name().equals(type)) {
-            Tower t = new Tower(70, 400, 500);
+            Tower t = new Tower(TowerType.CHINESE_TOWER,BulletType.BLUE,70, 400, 500);
             t.loadGraphic(Resources.towerImg.replaceAll("#", "7"),false,false,32,64);
             return t;
         }
         if (TowerType.CANNON_TOWER.name().equals(type)) {
-            Tower t = new Tower(60, 600, 200);
+            Tower t = new Tower(TowerType.CANNON_TOWER,BulletType.GREEN,60, 600, 200);
             t.loadGraphic(Resources.towerImg.replaceAll("#", "11"),false,false,32,64);
             return t;
         }
         if (TowerType.RIFLE_TOWER.name().equals(type)) {
-            Tower t = new Tower(50, 200, 100);
+            Tower t = new Tower(TowerType.RIFLE_TOWER,BulletType.GREEN,50, 200, 100);
             t.loadGraphic(Resources.towerImg.replaceAll("#", "12"),false,false,32,64);
             return t;
         }
         if (TowerType.GHOST_TOWER.name().equals(type)) {
-            Tower t = new Tower(50, 400, 500);
+            Tower t = new Tower(TowerType.GHOST_TOWER,BulletType.RED,50, 400, 500);
             t.loadGraphic(Resources.towerImg.replaceAll("#", "10"),false,false,32,64);
             return t;
         }
         if (TowerType.WATER_MAGIC.name().equals(type)) {
-            Tower t = new Tower(50, 300, 400);
+            Tower t = new Tower(TowerType.WATER_MAGIC,BulletType.BLUE,50, 300, 400);
             t.loadGraphic(Resources.towerImg.replaceAll("#", "6"),false,false,32,64);
             return t;
         }

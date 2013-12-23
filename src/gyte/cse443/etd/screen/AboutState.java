@@ -10,6 +10,7 @@ import gyte.cse443.etd.ui.Button;
 
 import org.flixel.FlxButton;
 import org.flixel.FlxG;
+import org.flixel.FlxSprite;
 import org.flixel.FlxState;
 import org.flixel.FlxText;
 import org.flixel.event.IFlxButton;
@@ -18,39 +19,37 @@ import org.flixel.event.IFlxButton;
  *
  * @author Emre
  */
-public class InfoState extends FlxState {
+public class AboutState extends FlxState {	
 	
-	private FlxButton back;
-	
-	private FlxState oldState ;
-	
-	public InfoState(FlxState oldState){
-		
-		this.oldState = oldState ;
-	}
+	private FlxButton back;	
 	
     @Override
     public void create() {
         
     	// geri ok isareti resourceslara eklenecek
-    	back = new Button(FlxG.width / 2 - 158, 110, Resources.back, new ReturnBack());
+    	back = new Button(FlxG.width / 2 - 158, FlxG.height - 100, Resources.back, new ReturnBack());
     
-    	FlxText info = new FlxText(FlxG.width / 2 - 100, 50, 0, "Watch out to monsters ! \n Just touch screen. \nBe speed !");
-    	info.antialiasing = true;
+    	FlxText about = new FlxText(FlxG.width / 2 - 100, 50, 0, "CREATED BY : \n Emre ARDIC \n Ramazan CELIK \n Fatma CELIK");
+    	about.setFormat(Resources.vinerHandFont, 30);
+    	about.antialiasing = true;
     	
+    	add(new FlxSprite(0,0).loadGraphic(Resources.menuBg));
         add(back);
-        add(info) ;
+        add(about) ;
     	
     }
+    
+  
     
     // LISTENER CLASSES FOR BUTTONS
     private class ReturnBack implements IFlxButton {
 
         public void callback() {
         	
-        	FlxG.switchState(oldState);
+        	FlxG.switchState(new StartMenuState());
         }
 
     }
 
+   
 }

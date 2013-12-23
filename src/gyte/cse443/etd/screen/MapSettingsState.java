@@ -5,17 +5,30 @@
  */
 package gyte.cse443.etd.screen;
 
+import org.flixel.FlxG;
 import org.flixel.FlxState;
+import org.flixel.FlxText;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.flixel.FlxSprite;
 
 /**
  *
  * @author Emre
  */
 public class MapSettingsState extends FlxState {
-
+	
+	
+	private List<FlxSprite> maps ;
+	
+	
     @Override
     public void create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    	
+    	
     }
 
 }

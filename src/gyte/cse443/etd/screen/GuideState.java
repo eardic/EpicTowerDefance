@@ -10,6 +10,7 @@ import gyte.cse443.etd.ui.Button;
 
 import org.flixel.FlxButton;
 import org.flixel.FlxG;
+import org.flixel.FlxSprite;
 import org.flixel.FlxState;
 import org.flixel.FlxText;
 import org.flixel.event.IFlxButton;
@@ -18,13 +19,12 @@ import org.flixel.event.IFlxButton;
  *
  * @author Emre
  */
-public class InfoState extends FlxState {
+public class GuideState extends FlxState {
+		
+	private FlxButton back;	
+	private FlxState oldState;
 	
-	private FlxButton back;
-	
-	private FlxState oldState ;
-	
-	public InfoState(FlxState oldState){
+	public GuideState(FlxState oldState){
 		
 		this.oldState = oldState ;
 	}
@@ -35,22 +35,22 @@ public class InfoState extends FlxState {
     	// geri ok isareti resourceslara eklenecek
     	back = new Button(FlxG.width / 2 - 158, 110, Resources.back, new ReturnBack());
     
-    	FlxText info = new FlxText(FlxG.width / 2 - 100, 50, 0, "Watch out to monsters ! \n Just touch screen. \nBe speed !");
-    	info.antialiasing = true;
+    	FlxText guide = new FlxText(FlxG.width / 2 - 100, 50, 0, "En iyi olmak icin stratejini iyi belirle...");
+    	guide.antialiasing = true;
     	
         add(back);
-        add(info) ;
+        add(guide) ;
     	
-    }
+    }  
     
     // LISTENER CLASSES FOR BUTTONS
     private class ReturnBack implements IFlxButton {
 
-        public void callback() {
-        	
+        public void callback() {        	
         	FlxG.switchState(oldState);
         }
 
     }
 
+   
 }

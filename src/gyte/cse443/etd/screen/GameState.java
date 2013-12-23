@@ -21,118 +21,180 @@ import org.flixel.ui.FlxInputText;
 
 public class GameState extends FlxState {
 
-    // Indicators
-    private FlxButton startStopButton, menuButton, speedButton;
-    private FlxInputText money, lives, score;
+	// Indicators
+	private FlxButton startStopButton, menuButton, speedButton;
+	private FlxInputText money, lives, score;
 
-    private boolean paused = true;
+	private boolean paused = true;
 
-    // Map,level, monster & tower manager
-    private Map map;
-    private Integer level;
-    private MonsterManager monsterMan;
-    private TowerManager towerMan;
-    private BulletManager bulletMan;
+	// Map,level, monster & tower manager
+	private Map map;
+	private Integer level;
+	private MonsterManager monsterMan;
+	private TowerManager towerMan;
+	private BulletManager bulletMan;
 
-    public GameState(int level) {
-        this.level = level;
+	public GameState(int level) {
+		this.level = level;
 
-        map = new MapFactory().create("" + level);
-        monsterMan = new MonsterManager(map, level);
-        towerMan = new TowerManager(map, level);
-        bulletMan = new BulletManager(map, towerMan.getPurchasedTowers(),
-                monsterMan.getWalkingMonsters());
+		map = new MapFactory().create("" + level);
+		monsterMan = new MonsterManager(map, level);
+		towerMan = new TowerManager(map, level);
+		bulletMan = new BulletManager(map, towerMan.getPurchasedTowers(),
+				monsterMan.getWalkingMonsters());
 
-        startStopButton = new Button(20, 7, Resources.startButton, 50, 50, new StartPauseEvent());
-        speedButton = new Button(100, 7, Resources.x1Button, 50, 50, new SpeedEvent());
-        money = new TextField(180, 26, 100, 30, "Resources", "500");
-        lives = new TextField(310, 26, 100, 30, "Lives", "5");
-        score = new TextField(440, 26, 100, 30, "Score", "0");
-        menuButton = new Button(570, 7, Resources.menuButton, 50, 50, new MenuEvent());
-    }
+		startStopButton = new Button(20, 7, Resources.startButton, 50, 50,
+				new StartPauseEvent());
+		speedButton = new Button(100, 7, Resources.x1Button, 50, 50,
+				new SpeedEvent());
+		money = new TextField(180, 26, 100, 30, "Resources", "500");
+		lives = new TextField(310, 26, 100, 30, "Lives", "5");
+		score = new TextField(440, 26, 100, 30, "Score", "0");
+		menuButton = new Button(570, 7, Resources.menuButton, 50, 50,
+				new MenuEvent(this));
+	}
 
-    public GameState() {
-        this(5);
-    }
+	public GameState() {
+		this(6);
+	}
 
-    @Override
-    public void create() {
-        add(map);
-        add(new FlxSprite().makeGraphic(FlxG.width, 64, Color.argb(255, 0, 0, 0)));
-        add(startStopButton);
-        add(speedButton);
-        add(money);
-        add(lives);
-        add(score);
-        add(menuButton);
-        add(monsterMan);
-        add(towerMan);
-        add(bulletMan);
-    }
+	@Override
+	public void create() {
+		add(map);
+		add(new FlxSprite().makeGraphic(FlxG.width, 64,
+				Color.argb(255, 0, 0, 0)));
+		add(startStopButton);
+		add(speedButton);
+		add(money);
+		add(lives);
+		add(score);
+		add(menuButton);
+		add(monsterMan);
+		add(towerMan);
+		add(bulletMan);
+	}
 
-    @Override
-    public void update() {
-        super.update(); //To change body of generated methods, choose Tools | Templates.
-        FlxG.overlap(monsterMan, bulletMan, new IFlxCollision() {
-            public void callback(FlxObject monster, FlxObject bullet) {
-                Bullet b = ((Bullet) bullet);
-                monster.hurt(b.getDamage());
-                b.kill();
-            }
-        });
-    }
+	@Override
+	public void update() {
+		super.update(); // To change body of generated methods, choose Tools |
+						// Templates.
+		FlxG.overlap(monsterMan, bulletMan, new IFlxCollision() {
+			public void callback(FlxObject monster, FlxObject bullet) {
+				Bullet b = ((Bullet) bullet);
+				monster.hurt(b.getDamage());
+				b.kill();
+			}
+		});
+	}
 
-    private class StartPauseEvent implements IFlxButton {
+	private class StartPauseEvent implements IFlxButton {
 
-        public void callback() {
-            // TODO Auto-generated method stub
-            System.out.println("Started/Paused");
-            if (paused) {// Paused and pressed play button
-                monsterMan.callMonsters(1);
-                startStopButton.loadGraphic(Resources.pauseButton, false, false, 50, 50);
-                pauseGame(false);
-            } else {// Not paused and pressed pause button
-                pauseGame(true);
-                startStopButton.loadGraphic(Resources.startButton, false, false, 50, 50);
-            }
-        }
+		public void callback() {
+			// TODO Auto-generated method stub
+			System.out.println("Started/Paused");
+			if (paused) {// Paused and pressed play button
+				monsterMan.callMonsters(1);
+				startStopButton.loadGraphic(Resources.pauseButton, false,
+						false, 50, 50);
+				pauseGame(false);
+			} else {// Not paused and pressed pause button
+				pauseGame(true);
+				startStopButton.loadGraphic(Resources.startButton, false,
+						false, 50, 50);
+			}
+		}
 
-    }
+	}
 
-    private void pauseGame(boolean pause) {
-        monsterMan.active = !pause;
-        towerMan.active = !pause;
-        bulletMan.active = !pause;
-        this.paused = pause;
-    }
+	public void pauseGame(boolean pause) {
+		monsterMan.active = !pause;
+		towerMan.active = !pause;
+		bulletMan.active = !pause;
+		this.paused = pause;
+	}
 
-    private class MenuEvent implements IFlxButton {
+	private class MenuEvent implements IFlxButton {
+		private GameState now;
 
-        public void callback() {
-            // TODO Auto-generated method stub
-            System.out.println("Menu");
-        }
+		public MenuEvent(GameState now) {
+			this.now = now;
+		}
 
-    }
+		public void callback() {
+			// TODO Auto-generated method stub
+			add(new PauseState(now));
+		}
 
-    private class SpeedEvent implements IFlxButton {
+	}
 
-        private boolean slow = true;
+	private class SpeedEvent implements IFlxButton {
 
-        public void callback() {
+		private boolean slow = true;
 
-            System.out.println("Speed");
-            if (slow) {// current is slow, want faster
-                speedButton.loadGraphic(Resources.x2Button, false, false, 50, 50);
-                slow = !slow;
-                monsterMan.setSpeed(200);
-            } else {
-                speedButton.loadGraphic(Resources.x1Button, false, false, 50, 50);
-                slow = !slow;
-                monsterMan.setSpeed(100);
-            }
-        }
+		public void callback() {
 
-    }
+			System.out.println("Speed");
+			if (slow) {// current is slow, want faster
+				speedButton.loadGraphic(Resources.x2Button, false, false, 50,
+						50);
+				slow = !slow;
+				monsterMan.setSpeed(200);
+			} else {
+				speedButton.loadGraphic(Resources.x1Button, false, false, 50,
+						50);
+				slow = !slow;
+				monsterMan.setSpeed(100);
+			}
+		}
+
+	}
+
+	public FlxButton getStartStopButton() {
+		return startStopButton;
+	}
+
+	public FlxButton getMenuButton() {
+		return menuButton;
+	}
+
+	public FlxButton getSpeedButton() {
+		return speedButton;
+	}
+
+	public FlxInputText getMoney() {
+		return money;
+	}
+
+	public FlxInputText getLives() {
+		return lives;
+	}
+
+	public FlxInputText getScore() {
+		return score;
+	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public MonsterManager getMonsterMan() {
+		return monsterMan;
+	}
+
+	public TowerManager getTowerMan() {
+		return towerMan;
+	}
+
+	public BulletManager getBulletMan() {
+		return bulletMan;
+	}
 
 }

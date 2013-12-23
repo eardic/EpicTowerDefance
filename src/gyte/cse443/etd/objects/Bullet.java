@@ -11,12 +11,18 @@ public class Bullet extends FlxSprite {
 
     private int damage;
 
-    public Bullet(String img, int dmg, int color) {
-        super(0, 0, img);
+    public Bullet(int dmg, int color) {
+        super(0, 0, null);
         this.damage = dmg;
         makeGraphic(5, 5, color);
         this.immovable = true;
-    }
+    }   
+    
+    public Bullet(int dmg) {
+        super(0, 0, null);
+        this.damage = dmg;
+        this.immovable = true;
+    }   
 
     public int getDamage() {
         return damage;

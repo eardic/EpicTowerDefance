@@ -18,6 +18,7 @@ public interface Resources {
     public static final String options = "menus/options.png";
     public static final String restartGame = "menus/restart.png";
     public static final String about = "menus/about.png";
+    public static final String back = "menus/back.png";
 
     public static final String mapTmx = "maps/map#/map#.tmx",
             mapTiles = "maps/map#/map#Tiles.png";
@@ -55,7 +56,10 @@ public interface Resources {
     public static final String fireSound = "sounds/fire.ogg";
     public static final String towerSound = "sounds/tower.mp3";
     public static final String showSound = "sounds/show.mp3";
-
+    
+    //Bullet
+    public static final String bulletImg = "bullets/#.png";
+    
     // Monsters
     public static final String monsterImg = "monsters/Monster#/Monster#.png";
 
