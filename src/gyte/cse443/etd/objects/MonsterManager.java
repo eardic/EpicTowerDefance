@@ -1,18 +1,10 @@
 package gyte.cse443.etd.objects;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import gyte.cse443.etd.map.Map;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
-import org.flixel.FlxBasic;
-import org.flixel.FlxG;
-
 import org.flixel.FlxGroup;
-import org.flixel.FlxObject;
-import org.flixel.FlxPath;
 
 /**
  * @author Emre
@@ -26,30 +18,47 @@ public class MonsterManager extends FlxGroup {
     private Stack<Stack<Monster>> monsterGroup;
     private Stack<Monster> waitingGroup, // Coming monsters for map 
             walkingMonsters;// Walking monsters on map
+    private int currentSpeed = 100;
     private boolean scheduled = false;
     private int breakout = 0;
     private final int level; // Current level
-    private final FlxPath path; // The path for monsters to walk
     private final Timer spawner; // Monster spawner for specific periods
+    private Map map;
 
-    public MonsterManager(FlxPath path, int level) {
+    public MonsterManager(Map map, int level) {
         this.level = level;
-        this.path = path;
+        this.map = map;
         createMonstersByLevel();//Initialize monster group
         waitingGroup = monsterGroup.pop();// Initialize waiting group
         walkingMonsters = new Stack<Monster>();// Empty walking monster
         spawner = new Timer("Monster Spawner");// Initialize monster spawner
     }
 
+    public Stack<Monster> getWalkingMonsters() {
+        return walkingMonsters;
+    }
+
     private void createMonstersByLevel() {
         monsterGroup = new Stack<Stack<Monster>>();
-        createGroup(GROUP_SIZE, MonsterType.KNIGHT);
-        /*if (level <= 1) {
-            createGroup(GROUP_SIZE, MonsterType.KNIGHT);
+        switch (level) {
+            case 10:
+            case 9:
+            case 8:
+            case 7:
+                createGroup(GROUP_SIZE, MonsterType.ALIEN);
+            case 6:
+                createGroup(GROUP_SIZE, MonsterType.DRAGON);
+            case 5:
+                createGroup(GROUP_SIZE, MonsterType.GOLEM);
+            case 4:
+                createGroup(GROUP_SIZE, MonsterType.WOLF);
+            case 3:
+                createGroup(GROUP_SIZE, MonsterType.LIZARD);
+            case 2:
+                createGroup(GROUP_SIZE, MonsterType.TROLL);
+            case 1:
+                createGroup(GROUP_SIZE, MonsterType.TREX);
         }
-        if (level <= 2) {
-            createGroup(GROUP_SIZE, MonsterType.KNIGHT);
-        }*/
     }
 
     private void createGroup(int size, MonsterType type) {
@@ -57,13 +66,20 @@ public class MonsterManager extends FlxGroup {
         Stack<Monster> monsters = new Stack<Monster>();
         for (int i = 0; i < size; ++i) {
             Monster m = factory.create(type.name());
-            m.x = path.head().x - m.x - m.width / 2;
-            m.y = path.head().y - m.y - m.height / 2;
+            m.x = map.getPath().head().x - m.x - m.width / 2;
+            m.y = map.getPath().head().y - m.y - m.height / 2;
             monsters.push(m);
         }
         monsterGroup.push(monsters);
     }
-
+    
+    @Override
+    public void destroy() {
+    	// TODO Auto-generated method stub
+    	spawner.cancel();
+    	super.destroy();
+    }
+    
     /**
      *
      * @param delay in seconds
@@ -78,7 +94,7 @@ public class MonsterManager extends FlxGroup {
                         // If not then manage monsters
                         if (!waitingGroup.isEmpty()) {
                             Monster m = waitingGroup.pop();
-                            m.followPath(path);                           
+                            m.followPath(map.getPath(), currentSpeed);
                             add(m);
                             walkingMonsters.push(m);
                         } else if (!monsterGroup.isEmpty()) {
@@ -107,8 +123,9 @@ public class MonsterManager extends FlxGroup {
         // Pathspeed becomes zero when it completes its path
         if (!walkingMonsters.isEmpty())// Remove escaped monster from walking list
         {
-            Monster m = walkingMonsters.pop();
+            Monster m = walkingMonsters.peek();
             if (m.pathSpeed <= 0) {
+                walkingMonsters.pop();
                 m.kill();
                 remove(m);
                 ++breakout;
@@ -121,11 +138,19 @@ public class MonsterManager extends FlxGroup {
         super.update();
         stopSpawnerIfAllDied();
         checkBreakout();
+        checkSpeed();
     }
 
     public void setSpeed(int s) {
-        for (Monster m : walkingMonsters) {
-            m.pathSpeed = s;
+        currentSpeed = s;
+    }
+
+    private void checkSpeed() {
+        int size = walkingMonsters.size();
+        for (int i = 0; i < size; ++i) {
+            if (walkingMonsters.get(i).pathSpeed > 0) {// If not completed the path
+                walkingMonsters.get(i).pathSpeed = currentSpeed;
+            }
         }
     }
 

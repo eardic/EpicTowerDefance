@@ -45,13 +45,13 @@ public class MenuBar extends FlxGroup {
 
     public void addMenuItem(FlxObject obj) {
         if (align == ALIGN_VERTICAL) {
-            obj.x += this.x;
+            obj.x = this.x;
             obj.y = this.y + (marginTop * length) + obj.y;
         } else {
             obj.x = this.x + (marginLeft * length) + obj.x;
-            obj.y += this.y;
+            obj.y = this.y;
         }
-        this.add(obj);
+        super.add(obj);
     }
 
     //SETTER-GETTER

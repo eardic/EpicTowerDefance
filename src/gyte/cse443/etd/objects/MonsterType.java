@@ -11,5 +11,5 @@ package gyte.cse443.etd.objects;
  * @author Emre
  */
 public enum MonsterType {
-    KNIGHT
+    DRAGON, ALIEN, TROLL, WOLF, TREX, GOLEM, LIZARD;
 }

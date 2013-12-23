@@ -5,6 +5,7 @@
  */
 package gyte.cse443.etd.objects;
 
+import android.graphics.Color;
 import gyte.cse443.etd.Factory;
 import org.flixel.FlxObject;
 
@@ -14,8 +15,10 @@ import org.flixel.FlxObject;
  */
 public class BulletFactory implements Factory {
 
-    public FlxObject create(String type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Bullet create(String type) {
+        Bullet b = new Bullet(null, 1, Color.RED);
+        b.pathSpeed = 400;
+        return b;
     }
 
 }

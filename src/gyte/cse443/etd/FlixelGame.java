@@ -2,6 +2,7 @@ package gyte.cse443.etd;
 
 import gyte.cse443.etd.screen.GameState;
 import gyte.cse443.etd.screen.WelcomeState;
+import org.flixel.FlxG;
 import org.flixel.FlxGame;
 
 public class FlixelGame extends FlxGame {
@@ -10,6 +11,8 @@ public class FlixelGame extends FlxGame {
 
     public FlixelGame() {
         super(SCREEN_HEIGHT, SCREEN_WIDTH, WelcomeState.class, 1, 50, 50);
+        //FlxG.visualDebug=true;        
+        //super.showSplashScreen = true;
     }
 
 }

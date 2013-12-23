@@ -1,6 +1,5 @@
 package gyte.cse443.etd.objects;
 
-import org.flixel.FlxObject;
 import org.flixel.FlxSprite;
 
 /**
@@ -12,9 +11,24 @@ public class Bullet extends FlxSprite {
 
     private int damage;
 
-    public Bullet(String img, int dmg) {
+    public Bullet(String img, int dmg, int color) {
         super(0, 0, img);
         this.damage = dmg;
+        makeGraphic(5, 5, color);
+        this.immovable = true;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    @Override
+    public String toString() {
+        return "Bullet X:" + x + ",Y:" + y + ",Dmg:" + damage;
     }
 
 }//end Bullet

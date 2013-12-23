@@ -7,7 +7,6 @@ package gyte.cse443.etd.map;
 
 import com.badlogic.gdx.utils.Array;
 import java.util.Comparator;
-import org.flixel.FlxG;
 import org.flixel.FlxObject;
 import org.flixel.FlxPath;
 import org.flixel.FlxPoint;
@@ -19,39 +18,67 @@ import org.flixel.FlxTilemap;
  */
 public class Map extends FlxTilemap {
 
-    private int pathTile = 0;
-    private Array<FlxPoint> path = null;
+    private int pathTile = 0, towerTile = 0;
+    Array<FlxPoint> pathCoor = null;// Coordinates of tiles of road
+    private FlxPath road = null;// Road for monsters to walk
 
     public Map() {
         super();
+    }
+
+    public int getTileX(float xCoor) {
+        return (int) xCoor / getTileWidth();
+    }
+
+    public int getTileY(float yCoor) {
+        return (int) yCoor / getTileHeight();
     }
 
     public int getPathTile() {
         return pathTile;
     }
 
+    public void setTowerTile(int towerTile) {
+        this.towerTile = towerTile;
+    }
+
+    public int getTowerTile() {
+        return towerTile;
+    }
+
     public void setPathTile(int pathTile) {
         this.pathTile = pathTile;
         // Set path tile, and create sorted path points by width
         setTileProperties(pathTile, FlxObject.NONE);
-        path = this.getTileCoords(pathTile);
-        path.sort(new Comparator<FlxPoint>() {
+        pathCoor = this.getTileCoords(pathTile);
+        pathCoor.sort(new Comparator<FlxPoint>() {
             public int compare(FlxPoint lhs, FlxPoint rhs) {
                 return (int) (lhs.x - rhs.x);
             }
         });
+        // Find path
+        road = findPath(pathCoor.first(), pathCoor.peek());
+        setTileProperties(towerTile, FlxObject.NONE);
+    }
+
+    public int getTileWidth() {
+        return _tileWidth;
+    }
+
+    public int getTileHeight() {
+        return _tileHeight;
     }
 
     public FlxPoint getEntranceTile() {
-        return path.first();
+        return pathCoor.first();
     }
 
     public FlxPoint getExitTile() {
-        return path.peek();
+        return pathCoor.peek();
     }
 
     public FlxPath getPath() {
-        return findPath(path.first(), path.peek());
+        return road;
     }
 
 }

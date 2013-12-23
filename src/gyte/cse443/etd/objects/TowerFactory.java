@@ -6,7 +6,7 @@
 package gyte.cse443.etd.objects;
 
 import gyte.cse443.etd.Factory;
-import org.flixel.FlxObject;
+import gyte.cse443.etd.Resources;
 
 /**
  *
@@ -14,8 +14,44 @@ import org.flixel.FlxObject;
  */
 public class TowerFactory implements Factory {
 
-    public FlxObject create(String type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Tower create(String type) {
+        if (TowerType.CRYSTAL_TOWER.name().equals(type)) {
+            Tower t = new Tower(90, 300, 1000);
+            t.loadGraphic(Resources.towerImg.replaceAll("#", "3"),false,false,32,64);
+            return t;
+        }
+        if (TowerType.BLOOD_MAGIC.name().equals(type)) {
+            Tower t = new Tower(80, 500, 600);
+            t.loadGraphic(Resources.towerImg.replaceAll("#", "5"),false,false,32,64);
+            return t;
+        }
+        if (TowerType.CHINESE_TOWER.name().equals(type)) {
+            Tower t = new Tower(70, 400, 500);
+            t.loadGraphic(Resources.towerImg.replaceAll("#", "7"),false,false,32,64);
+            return t;
+        }
+        if (TowerType.CANNON_TOWER.name().equals(type)) {
+            Tower t = new Tower(60, 600, 200);
+            t.loadGraphic(Resources.towerImg.replaceAll("#", "11"),false,false,32,64);
+            return t;
+        }
+        if (TowerType.RIFLE_TOWER.name().equals(type)) {
+            Tower t = new Tower(50, 200, 100);
+            t.loadGraphic(Resources.towerImg.replaceAll("#", "12"),false,false,32,64);
+            return t;
+        }
+        if (TowerType.GHOST_TOWER.name().equals(type)) {
+            Tower t = new Tower(50, 400, 500);
+            t.loadGraphic(Resources.towerImg.replaceAll("#", "10"),false,false,32,64);
+            return t;
+        }
+        if (TowerType.WATER_MAGIC.name().equals(type)) {
+            Tower t = new Tower(50, 300, 400);
+            t.loadGraphic(Resources.towerImg.replaceAll("#", "6"),false,false,32,64);
+            return t;
+        }
+        
+        return null;
     }
 
 }

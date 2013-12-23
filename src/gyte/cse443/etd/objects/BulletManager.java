@@ -1,34 +1,48 @@
 package gyte.cse443.etd.objects;
 
+import com.badlogic.gdx.utils.Array;
+import gyte.cse443.etd.map.Map;
 import java.util.ArrayList;
 import java.util.List;
+import org.flixel.FlxGroup;
+import org.flixel.FlxPath;
+import org.flixel.FlxPoint;
 
 /**
  * @author Emre
  * @version 1.0
  * @created 03-Dec-2013 12:43:10
  */
-public class BulletManager {
+public class BulletManager extends FlxGroup {
 
-    private List<Bullet> bullets;
+    private final List<Tower> purshasedTowers;
+    private final List<Monster> walkingMonsters;
+    private final Map map;
 
-    public BulletManager() {
-        bullets = new ArrayList<Bullet>();
+    public BulletManager(Map map, List<Tower> purshasedTowers, List<Monster> walkingMonsters) {
+        this.purshasedTowers = purshasedTowers;
+        this.walkingMonsters = walkingMonsters;
+        this.map = map;
     }
 
-    /**
-     *
-     * @param b
-     */
-    public void addBullet(Bullet b) {
-        bullets.add(b);
+    @Override
+    public void update() {
+        super.update();
+        checkTowerAttack();
     }
 
-    /**
-     *
-     * @param b
-     */
-    public void removeBullet(Bullet b) {
-        bullets.remove(b);
+    private void checkTowerAttack() {
+        int towSize = purshasedTowers.size();
+        for (int i = 0; i < towSize; ++i) {
+            Tower t = purshasedTowers.get(i);
+            int monSize = walkingMonsters.size();
+            for (int j = 0; j < monSize; ++j) {
+                Monster m = walkingMonsters.get(j);
+                if (t.canAttack(m)) {
+                    super.add(t.attack(m));
+                }
+            }
+        }
     }
+
 }// end BulletManager

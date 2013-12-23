@@ -11,5 +11,6 @@ package gyte.cse443.etd.objects;
  * @author Emre
  */
 public enum TowerType {
-    
+    CRYSTAL_TOWER, BLOOD_MAGIC, WATER_MAGIC, 
+    CHINESE_TOWER, GHOST_TOWER, RIFLE_TOWER, CANNON_TOWER 
 }

@@ -29,4 +29,9 @@ public class Button extends FlxButton {
     public Button(int x, int y, String img, IFlxButton onClick) {
         this(x, y, img, 0, 0, onClick);
     }
+
+    public Button(String label, IFlxButton onClick) {
+        super(0, 0, label, onClick);
+    }
+
 }
