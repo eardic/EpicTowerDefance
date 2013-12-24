@@ -67,8 +67,8 @@ public class Map extends FlxTilemap {
 
     public int getTileHeight() {
         return _tileHeight;
-    }
-
+    }   
+   
     public FlxPoint getEntranceTile() {
         return pathCoor.first();
     }

@@ -1,9 +1,13 @@
 package gyte.cse443.etd.objects;
 
 import com.badlogic.gdx.utils.Array;
+
+import gyte.cse443.etd.Resources;
 import gyte.cse443.etd.map.Map;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.flixel.FlxG;
 import org.flixel.FlxGroup;
 import org.flixel.FlxPath;
 import org.flixel.FlxPoint;
@@ -38,8 +42,9 @@ public class BulletManager extends FlxGroup {
             int monSize = walkingMonsters.size();
             for (int j = 0; j < monSize; ++j) {
                 Monster m = walkingMonsters.get(j);
-                if (t.canAttack(m)) {
-                    super.add(t.attack(m));
+                Bullet b = t.attack(m);
+                if (b!=null) {
+                    add(b);
                 }
             }
         }

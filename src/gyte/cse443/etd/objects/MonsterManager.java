@@ -4,6 +4,8 @@ import gyte.cse443.etd.map.Map;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import org.flixel.FlxBasic;
 import org.flixel.FlxGroup;
 
 /**
@@ -123,11 +125,11 @@ public class MonsterManager extends FlxGroup {
         // Pathspeed becomes zero when it completes its path
         if (!walkingMonsters.isEmpty())// Remove escaped monster from walking list
         {
-            Monster m = walkingMonsters.peek();
-            if (m.pathSpeed <= 0) {
-                walkingMonsters.pop();
+            Monster m = walkingMonsters.firstElement();
+            if (m.pathSpeed <= 0 && m.alive) {                
                 m.kill();
                 remove(m);
+                walkingMonsters.remove(m);
                 ++breakout;
             }
         }
@@ -135,14 +137,21 @@ public class MonsterManager extends FlxGroup {
 
     @Override
     public void update() {
-        super.update();
-        stopSpawnerIfAllDied();
+        super.update();        
         checkBreakout();
         checkSpeed();
+        stopSpawnerIfAllDied();
     }
 
     public void setSpeed(int s) {
         currentSpeed = s;
+    }
+    
+    @Override
+    public FlxBasic remove(FlxBasic Object) {
+    	// TODO Auto-generated method stub
+    	walkingMonsters.remove(Object);
+    	return super.remove(Object);
     }
 
     private void checkSpeed() {

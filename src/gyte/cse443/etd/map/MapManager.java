@@ -10,16 +10,18 @@ import java.util.List;
  */
 public class MapManager {
 
-    private List<Map> maps;
+	private List<Map> maps;
 
-    public MapManager() {
-        maps = new ArrayList<Map>();
-        // Load maps
-        maps.add(new MapFactory().create("2"));
-    }
+	public MapManager(int mapCount) {
+		maps = new ArrayList<Map>();
+		// Load maps
+		for (int i = 1; i <= mapCount; ++i) {
+			maps.add(new MapFactory().create(""+i));
+		}
+	}
 
-    public Map getMap(int level) {
-        return maps.get(level);
-    }
+	public Map getMap(int level) {
+		return maps.get(level);
+	}
 
 }// end MapManager

@@ -1,8 +1,7 @@
 package gyte.cse443.etd;
 
-import gyte.cse443.etd.screen.GameState;
 import gyte.cse443.etd.screen.WelcomeState;
-import org.flixel.FlxG;
+
 import org.flixel.FlxGame;
 
 public class FlixelGame extends FlxGame {

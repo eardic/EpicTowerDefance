@@ -46,7 +46,7 @@ public class StartMenuState extends FlxState {
     private class StartGame implements IFlxButton {
 
         public void callback() {
-            FlxG.switchState(new GameState());
+            FlxG.switchState(new MapSettingsState());
         }
 
     }

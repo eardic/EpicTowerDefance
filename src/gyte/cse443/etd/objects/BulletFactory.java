@@ -19,11 +19,11 @@ public class BulletFactory implements Factory {
 
 	public Bullet create(String type) {
 		if ("red".equalsIgnoreCase(type)) {
-			Bullet b = new Bullet(10);
-			b.pathSpeed = 200;
+			Bullet b = new Bullet(20);
+			b.pathSpeed = 300;
 			b.loadGraphic(Resources.bulletImg.replace("#", "red"), true, true,
 					10, 10);
-			b.addAnimation("shot", new int[] { 0, 1, 2, 3 }, 15, true);
+			b.addAnimation("shot", new int[] { 0, 1, 2, 3 }, 20, true);
 			b.play("shot");
 			return b;
 		} else if ("blue".equalsIgnoreCase(type)) {
@@ -35,8 +35,8 @@ public class BulletFactory implements Factory {
 			b.play("shot");
 			return b;
 		} else if ("green".equalsIgnoreCase(type)) {
-			Bullet b = new Bullet(20);
-			b.pathSpeed = 400;
+			Bullet b = new Bullet(10);
+			b.pathSpeed = 200;
 			b.loadGraphic(Resources.bulletImg.replace("#", "green"), true,
 					true, 10, 10);
 			b.addAnimation("shot", new int[] { 0, 1, 2, 3 }, 15, true);

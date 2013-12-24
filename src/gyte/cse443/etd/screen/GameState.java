@@ -6,6 +6,7 @@ import gyte.cse443.etd.map.Map;
 import gyte.cse443.etd.map.MapFactory;
 import gyte.cse443.etd.objects.Bullet;
 import gyte.cse443.etd.objects.BulletManager;
+import gyte.cse443.etd.objects.Monster;
 import gyte.cse443.etd.objects.MonsterManager;
 import gyte.cse443.etd.objects.TowerManager;
 import gyte.cse443.etd.ui.Button;
@@ -25,7 +26,7 @@ public class GameState extends FlxState {
 	private FlxButton startStopButton, menuButton, speedButton;
 	private FlxInputText money, lives, score;
 
-	private boolean paused = true;
+	private boolean paused = true, gameOver=false;
 
 	// Map,level, monster & tower manager
 	private Map map;
@@ -33,25 +34,28 @@ public class GameState extends FlxState {
 	private MonsterManager monsterMan;
 	private TowerManager towerMan;
 	private BulletManager bulletMan;
+	
+	private final int MAX_LIVES=5;
 
 	public GameState(int level) {
 		this.level = level;
-
-		map = new MapFactory().create("" + level);
-		monsterMan = new MonsterManager(map, level);
-		towerMan = new TowerManager(map, level);
-		bulletMan = new BulletManager(map, towerMan.getPurchasedTowers(),
-				monsterMan.getWalkingMonsters());
-
+		
 		startStopButton = new Button(20, 7, Resources.startButton, 50, 50,
 				new StartPauseEvent());
 		speedButton = new Button(100, 7, Resources.x1Button, 50, 50,
 				new SpeedEvent());
 		money = new TextField(180, 26, 100, 30, "Resources", "500");
-		lives = new TextField(310, 26, 100, 30, "Lives", "5");
+		lives = new TextField(310, 26, 100, 30, "Lives", ""+MAX_LIVES);
 		score = new TextField(440, 26, 100, 30, "Score", "0");
 		menuButton = new Button(570, 7, Resources.menuButton, 50, 50,
 				new MenuEvent(this));
+		map = new MapFactory().create("" + level);
+		
+		monsterMan = new MonsterManager(map, level);
+		towerMan = new TowerManager(money, map, level);
+		bulletMan = new BulletManager(map, towerMan.getPurchasedTowers(),
+				monsterMan.getWalkingMonsters());
+
 	}
 
 	public GameState() {
@@ -73,16 +77,53 @@ public class GameState extends FlxState {
 		add(towerMan);
 		add(bulletMan);
 	}
-
+	
+	private void increaseScore(int value){
+		int score = Integer.parseInt(this.score.getText().toString());
+		int money = Integer.parseInt(this.money.getText().toString());		
+		score += value;
+		money += value/2;
+		this.score.setText(score+"");
+		this.money.setText(money+"");
+	}
+	
+	private boolean lifeLeft(){
+		int live = Integer.parseInt(this.lives.getText().toString());
+		return live > 0;
+	}
+	
+	private void updateLife(){
+		int live = Integer.parseInt(this.lives.getText().toString());
+		if(live > 0){
+			lives.setText(""+(MAX_LIVES - monsterMan.getBreakout()));
+		}
+	}
+	
 	@Override
 	public void update() {
-		super.update(); // To change body of generated methods, choose Tools |
-						// Templates.
+		super.update();
+		
+		updateLife();
+		
+		if(!lifeLeft()&&!gameOver){
+			add(new GameOver(this, false));
+			gameOver=true;
+		}
+		
+		if(monsterMan.allDied()&&!gameOver){
+			add(new GameOver(this, true));
+			gameOver=true;
+		}
+		
 		FlxG.overlap(monsterMan, bulletMan, new IFlxCollision() {
 			public void callback(FlxObject monster, FlxObject bullet) {
 				Bullet b = ((Bullet) bullet);
 				monster.hurt(b.getDamage());
-				b.kill();
+				if(!monster.alive){
+					increaseScore(((Monster)monster).getPoint());
+					monsterMan.remove(monster);
+				}
+				bulletMan.remove(b);
 			}
 		});
 	}
@@ -149,18 +190,6 @@ public class GameState extends FlxState {
 
 	}
 
-	public FlxButton getStartStopButton() {
-		return startStopButton;
-	}
-
-	public FlxButton getMenuButton() {
-		return menuButton;
-	}
-
-	public FlxButton getSpeedButton() {
-		return speedButton;
-	}
-
 	public FlxInputText getMoney() {
 		return money;
 	}
@@ -184,17 +213,6 @@ public class GameState extends FlxState {
 	public Integer getLevel() {
 		return level;
 	}
-
-	public MonsterManager getMonsterMan() {
-		return monsterMan;
-	}
-
-	public TowerManager getTowerMan() {
-		return towerMan;
-	}
-
-	public BulletManager getBulletMan() {
-		return bulletMan;
-	}
+	
 
 }

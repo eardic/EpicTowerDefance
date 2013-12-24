@@ -8,7 +8,11 @@ public interface Resources {
     public static final String startButton = "menus/start.png",
             pauseButton = "menus/pause.png",
             menuButton = "menus/menu.png";
-
+    
+    public static final String arrow = "menus/arrow.png";
+    
+    public static final String credits = "menus/won.png";
+    
     // Menu state buttons
     public static final String menuBg = "menus/menuBg.png";
     public static final String startGame = "menus/startGame.png";
@@ -19,7 +23,9 @@ public interface Resources {
     public static final String restartGame = "menus/restart.png";
     public static final String about = "menus/about.png";
     public static final String back = "menus/back.png";
-
+    public static final String nextLevel = "menus/nextLevel.png";
+    
+    public static final String mapImg = "maps/map#/map#.png";
     public static final String mapTmx = "maps/map#/map#.tmx",
             mapTiles = "maps/map#/map#Tiles.png";
     
@@ -30,9 +36,9 @@ public interface Resources {
     public static final int map5PathTile = 3;
     public static final int map6PathTile = 15;
     public static final int map7PathTile = 40;
-    public static final int map8PathTile = 10;
+    public static final int map8PathTile = 15;
     public static final int map9PathTile = 17;
-    public static final int map10PathTile = 1;
+    public static final int map10PathTile = 3;
     
     public static final int map1TowerTile = 30;
     public static final int map2TowerTile = 5;
@@ -41,9 +47,9 @@ public interface Resources {
     public static final int map5TowerTile = 1;
     public static final int map6TowerTile = 30;
     public static final int map7TowerTile = 1;
-    public static final int map8TowerTile = 4;
+    public static final int map8TowerTile = 30;
     public static final int map9TowerTile = 11;
-    public static final int map10TowerTile = 4;
+    public static final int map10TowerTile = 1;
 
     //Tower template
     public static final String towerImg = "towers/tower#.png";

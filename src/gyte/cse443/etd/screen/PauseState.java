@@ -12,7 +12,6 @@ import org.flixel.FlxButton;
 import org.flixel.FlxG;
 import org.flixel.FlxGroup;
 import org.flixel.FlxSprite;
-import org.flixel.FlxState;
 import org.flixel.event.IFlxButton;
 
 import android.graphics.Color;
@@ -57,9 +56,7 @@ public class PauseState extends FlxGroup {
 	private class Restart implements IFlxButton {
 
 		public void callback() {
-
-			FlxG.switchState(new GameState());
-
+			FlxG.switchState(new GameState(state.getLevel()));
 		}
 
 	}
@@ -67,9 +64,7 @@ public class PauseState extends FlxGroup {
 	private class Menu implements IFlxButton {
 
 		public void callback() {
-
 			FlxG.switchState(new StartMenuState());
-
 		}
 
 	}

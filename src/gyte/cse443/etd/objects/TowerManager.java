@@ -9,6 +9,7 @@ import java.util.List;
 import org.flixel.FlxG;
 import org.flixel.FlxGroup;
 import org.flixel.event.IFlxButton;
+import org.flixel.ui.FlxInputText;
 
 /**
  * @author Emre
@@ -17,114 +18,135 @@ import org.flixel.event.IFlxButton;
  */
 public class TowerManager extends FlxGroup {
 
-    private final List<Tower> purchasedTowers;
-    private final int level;
-    private ListBox towerBox;
-    private final TowerFactory towerFactory;
-    private final Map map;
+	private final List<Tower> purchasedTowers;
+	private final int level;
+	private ListBox towerBox;
+	private final TowerFactory towerFactory;
+	private final Map map;
+	private FlxInputText money;
 
-    public TowerManager(Map map, int level) {
-        this.towerFactory = new TowerFactory();
-        this.purchasedTowers = new ArrayList<Tower>();
-        this.level = level;
-        this.towerBox = null;//Closed
-        this.map = map;
-    }
+	public TowerManager(FlxInputText money, Map map, int level) {
+		this.towerFactory = new TowerFactory();
+		this.purchasedTowers = new ArrayList<Tower>();
+		this.level = level;
+		this.towerBox = null;// Closed
+		this.map = map;
+		this.money = money;
+	}
 
-    public List<Tower> getPurchasedTowers() {
-        return purchasedTowers;
-    }
+	public List<Tower> getPurchasedTowers() {
+		return purchasedTowers;
+	}
 
-    @Override
-    public void update() {
-        super.update(); //To change body of generated methods, choose Tools | Templates.
-        if (FlxG.mouse.justPressed()) {
-            openTowerBox(FlxG.mouse.screenX, FlxG.mouse.screenY);
-        }
-    }
+	@Override
+	public void update() {
+		super.update(); // To change body of generated methods, choose Tools |
+						// Templates.
+		if (FlxG.mouse.justPressed()) {
+			openTowerBox(FlxG.mouse.screenX, FlxG.mouse.screenY);
+		}
+	}
 
-    public int getTotalCost() {
-        int cost = 0;
-        for (Tower t : purchasedTowers) {
-            cost += t.getCost();
-        }
-        return cost;
-    }
+	public int getTotalCost() {
+		int cost = 0;
+		for (Tower t : purchasedTowers) {
+			cost += t.getCost();
+		}
+		return cost;
+	}
 
-    private boolean isValidTile(int x, int y) {
-        int tileX = map.getTileX(x);
-        int tileY = map.getTileY(y);
-        int tile = map.getTile(tileX, tileY);
-        return tile == map.getTowerTile();
-    }
+	private boolean isValidTile(int x, int y) {
+		int tileX = map.getTileX(x);
+		int tileY = map.getTileY(y);
+		int tile = map.getTile(tileX, tileY);
+		return tile == map.getTowerTile();
+	}
 
-    private void openTowerBox(int x, int y) {
+	private boolean buyTower(Tower t) {
+		int cash = Integer.parseInt(this.money.getText().toString());
+		if (cash >= t.getCost()) {
+			this.money.setText("" + (cash - t.getCost()));
+			return true;
+		}
+		return false;
+	}
 
-        if (isOutOfBox(x, y)) {// If user press out of list
-            if (towerBox != null) {// If list is open
-                closeTowerBox();// Close list
-            }//Else open new list 
-            else if (isValidTile(x, y) && y > 64) {// 64 is indicator height            
-                towerBox = new ListBox(x, y);
-                towerBox.add(new Button(TowerType.BLOOD_MAGIC.name(), new SelectedItem(x, y, TowerType.BLOOD_MAGIC)));
-                towerBox.add(new Button(TowerType.WATER_MAGIC.name(), new SelectedItem(x, y, TowerType.WATER_MAGIC)));
-                towerBox.add(new Button(TowerType.CANNON_TOWER.name(), new SelectedItem(x, y, TowerType.CANNON_TOWER)));
-                towerBox.add(new Button(TowerType.CRYSTAL_TOWER.name(), new SelectedItem(x, y, TowerType.CRYSTAL_TOWER)));
-                towerBox.add(new Button(TowerType.GHOST_TOWER.name(), new SelectedItem(x, y, TowerType.GHOST_TOWER)));
-                towerBox.add(new Button(TowerType.RIFLE_TOWER.name(), new SelectedItem(x, y, TowerType.RIFLE_TOWER)));
-                towerBox.add(new Button(TowerType.CHINESE_TOWER.name(), new SelectedItem(x, y, TowerType.CHINESE_TOWER)));
-                FlxG.play(Resources.showSound);
-                add(towerBox);
-            }
-        }
-    }
+	private void openTowerBox(int x, int y) {
 
-    private boolean isOutOfBox(int x, int y) {
-        return towerBox == null || x < towerBox.getX() || y < towerBox.getY()
-                || x > towerBox.getX() + towerBox.getWidth()
-                || y > towerBox.getY() + towerBox.getHeight();
-    }
+		if (isOutOfBox(x, y)) {// If user press out of list
+			if (towerBox != null) {// If list is open
+				closeTowerBox();// Close list
+			}// Else open new list
+			else if (isValidTile(x, y) && y > 64) {// 64 is indicator height
+				towerBox = new ListBox(x, y);
+				towerBox.add(new Button(TowerType.BLOOD_MAGIC.name(),
+						new SelectedItem(x, y, TowerType.BLOOD_MAGIC)));
+				towerBox.add(new Button(TowerType.WATER_MAGIC.name(),
+						new SelectedItem(x, y, TowerType.WATER_MAGIC)));
+				towerBox.add(new Button(TowerType.CANNON_TOWER.name(),
+						new SelectedItem(x, y, TowerType.CANNON_TOWER)));
+				towerBox.add(new Button(TowerType.CRYSTAL_TOWER.name(),
+						new SelectedItem(x, y, TowerType.CRYSTAL_TOWER)));
+				towerBox.add(new Button(TowerType.GHOST_TOWER.name(),
+						new SelectedItem(x, y, TowerType.GHOST_TOWER)));
+				towerBox.add(new Button(TowerType.RIFLE_TOWER.name(),
+						new SelectedItem(x, y, TowerType.RIFLE_TOWER)));
+				towerBox.add(new Button(TowerType.CHINESE_TOWER.name(),
+						new SelectedItem(x, y, TowerType.CHINESE_TOWER)));
+				FlxG.play(Resources.showSound);
+				add(towerBox);
+			}
+		}
+	}
 
-    private void closeTowerBox() {
-        if (towerBox != null) {// If open
-            towerBox.kill();// Delete buttons of box
-            towerBox.destroy();
-            remove(towerBox);// Close tower list
-            towerBox = null;
-        }
-    }
+	private boolean isOutOfBox(int x, int y) {
+		return towerBox == null || x < towerBox.getX() || y < towerBox.getY()
+				|| x > towerBox.getX() + towerBox.getWidth()
+				|| y > towerBox.getY() + towerBox.getHeight();
+	}
 
-    private void putTowerToPressedTile(TowerType type, int x, int y) {
-        // Create tower
-        Tower t = towerFactory.create(type.name());
+	private void closeTowerBox() {
+		if (towerBox != null) {// If open
+			towerBox.kill();// Delete buttons of box
+			towerBox.destroy();
+			remove(towerBox);// Close tower list
+			towerBox = null;
+		}
+	}
 
-        // Finds tile index by x,y, and put ground of tower to pressed area
-        int tileX = map.getTileX(x),
-                tileY = map.getTileY(y) - (int) (t.height / map.getTileHeight()) + 1;
-        // Set position
-        t.x = tileX * map.getTileWidth();
-        t.y = tileY * map.getTileHeight();
+	private void putTowerToPressedTile(TowerType type, int x, int y) {
+		// Create tower
+		Tower t = towerFactory.create(type.name());
 
-        purchasedTowers.add(t); // add to tower list
-        add(t); // show tower on map
-        FlxG.play(Resources.towerSound);
-    }
+		if (buyTower(t)) {// If we can buy it, then add it
+			// Finds tile index by x,y, and put ground of tower to pressed area
+			int tileX = map.getTileX(x), tileY = map.getTileY(y)
+					- (int) (t.height / map.getTileHeight()) + 1;
+			// Set position
+			t.x = tileX * map.getTileWidth();
+			t.y = tileY * map.getTileHeight();
 
-    private class SelectedItem implements IFlxButton {
+			purchasedTowers.add(t); // add to tower list
+			add(t); // show tower on map
+			FlxG.play(Resources.towerSound);
+		}
+	}
 
-        private TowerType type;
-        private int x, y;
+	private class SelectedItem implements IFlxButton {
 
-        public SelectedItem(int x, int y, TowerType type) {
-            this.type = type;
-            this.x = x;
-            this.y = y;
-        }
+		private TowerType type;
+		private int x, y;
 
-        public void callback() {
-            putTowerToPressedTile(type, x, y);
-            closeTowerBox(); // Close tower box
-        }
-    }
+		public SelectedItem(int x, int y, TowerType type) {
+			this.type = type;
+			this.x = x;
+			this.y = y;
+		}
 
-}//end TowerManager
+		public void callback() {
+			putTowerToPressedTile(type, x, y);
+			closeTowerBox(); // Close tower box
+		}
+	}
+
+}// end TowerManager
